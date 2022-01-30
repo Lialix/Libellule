@@ -11,3 +11,7 @@ class IndexView(generic.TemplateView):
 class RoomView(generic.TemplateView):
     template_name = "chat/room.html"
     room_name: "room_name"
+
+class HomeView(generic.TemplateView):
+    template_name = "chat/home.html"
+room_name: "room_name"

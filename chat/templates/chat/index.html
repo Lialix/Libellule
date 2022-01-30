@@ -1,4 +1,7 @@
 <!-- chat/templates/chat/index.html -->
+<script id ="logo" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{%load static%}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,9 +9,10 @@
     <title>Chat Rooms</title>
 </head>
 <body>
-    What chat room would you like to enter?<br>
+    <img src="{% static 'chat/logo.jpg' %}" alt="logo" onclick="redirectHome()">
+    <br>Quel salon voulez-vous rejoindre ?</br> 
     <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+    <input id="room-name-submit" type="button" value="Valider"><span id="error"></span>
 
     <script>
         document.querySelector('#room-name-input').focus();
@@ -18,10 +22,22 @@
             }
         };
 
+        function isEmptyOrSpaces(str){
+            return str === null || str.match(/^ *$/) !== null;
+        }
+
         document.querySelector('#room-name-submit').onclick = function(e) {
             var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';
+            if (isEmptyOrSpaces(roomName)){
+                errorMessage();
+            }
+            else window.location.pathname = '/chat/' + roomName + '/';
         };
+
+        function redirectHome() {
+            window.location.pathname = '';
+        }
+
     </script>
 </body>
 </html>
