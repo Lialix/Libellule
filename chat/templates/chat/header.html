@@ -1,0 +1,21 @@
+{%load static%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Libellule</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/css/header.css' %}">
+    
+</head>
+<body>
+    <img src="{% static 'chat/images/logo.jpg' %}" alt="logo" onclick="redirectHome()">
+
+    {% block content%}
+
+    {% endblock content%}
+
+</body>
+</html>

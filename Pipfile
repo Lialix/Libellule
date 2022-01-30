@@ -10,6 +10,7 @@ channels-redis = "*"
 daphne = "*"
 gunicorn = "*"
 whitenoise = "*"
+django-redis = "*"
 
 [dev-packages]
 
