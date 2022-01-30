@@ -69,13 +69,15 @@ let handleUserLeft = async (user) => {
 }
 
 let leaveAndRemoveLocalStream = async () => {
-    for (let i =0; localTracks.length > i; i++){
+    for (let i=0; localTracks.length > i; i++){
         localTracks[i].stop()
         localTracks[i].close()
     }
 
     await client.leave()
-    window.open('/chat', '_self')
+    //This is somewhat of an issue because if user leaves without actaull pressing leave button, it will not trigger
+    deleteMember()
+    window.open('/', '_self')
 }
 
 let toggleCamera = async (e) => {
