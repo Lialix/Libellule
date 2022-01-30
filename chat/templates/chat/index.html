@@ -1,42 +1,14 @@
-{% extends 'chat/main.html' %}
-{%load static%}
+{% extends 'chat/header.html' %}
 
 {% block content %}
 
-    <main>
-
-        <section id="form-container">
-
-            <div id="welcome-message">
-                <img src="{% static 'chat/images/logo.png' %}" id="logo" onclick="redirectHome()">
-                <h1>Bienvenue sur Libellule</h1>
-                <p>La plateforme de discussion faite juste pour vous !</p>
-            </div>
-
-            <form id="form">
-                <div class="field-wrapper">
-
-                    <div class="form-field">
-                        <label>Salon:</label>
-                        <input id="room_name" placeholder="Entrer un nom de salon..."  style="text-transform:uppercase"/>
-                    </div>
-
-                    <div class="form-field">
-                        <label>Nom:</label>
-                        <input id="user-name" placeholder="Entrer un pseudo..."  style="text-transform:uppercase"/>
-                    </div>
-
-                    <div class="form-field">
-                        <input id="room-name-submit" type="button" value="Rejoindre" />
-                    </div>
-                </div>
-            </form>
-        </section>
-    </main>
+    <br>Quel salon voulez-vous rejoindre ?</br> 
+    <input id="room-name-input" type="text" size="100"><br>
+    <input id="room-name-submit" type="button" value="Valider"><span id="error"></span>
 
     <script>
-        document.querySelector('#room_name').focus();
-        document.querySelector('#room_name').onkeyup = function(e) {
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function(e) {
             if (e.keyCode === 13) {  // enter, return
                 document.querySelector('#room-name-submit').click();
             }
@@ -47,7 +19,7 @@
         }
 
         document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room_name').value;
+            var roomName = document.querySelector('#room-name-input').value;
             if (isEmptyOrSpaces(roomName)){
                 errorMessage();
             }

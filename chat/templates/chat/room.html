@@ -1,22 +1,12 @@
-{% extends 'chat/main.html' %}
+{% extends 'chat/header.html' %}
 
     {% block content %}
-
-    <main>
-    <section id="room-name-wrapper">
-        <p>Nom du Salon: <span id="roomName">{{room_name}}</span></P>
-    <section>
+    
     <br>
     <textarea readonly="yes" id="chat-log" style="resize:none" cols="100" rows="20"></textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Envoyer">
     {{ room_name|json_script:"room-name" }}
-
-    <main>
-
-
-
-
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
