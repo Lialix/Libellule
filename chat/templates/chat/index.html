@@ -23,7 +23,7 @@
 
                     <div class="form-field">
                         <label>Nom:</label>
-                        <input id="user_name" placeholder="Entrer un pseudo..."  style="text-transform:uppercase"/>
+                        <input id="user-name" placeholder="Entrer un pseudo..."  style="text-transform:uppercase"/>
                     </div>
 
                     <div class="form-field">
@@ -48,40 +48,11 @@
 
         document.querySelector('#room-name-submit').onclick = function(e) {
             var roomName = document.querySelector('#room_name').value;
-            var userName = document.querySelector('#user_name').value;
-            if (isEmptyOrSpaces(roomName) || isEmptyOrSpaces(userName)){
+            if (isEmptyOrSpaces(roomName)){
                 errorMessage();
             }
-            else {
-                handleSubmit(roomName,userName)
-                window.location.pathname = '/chat/' + roomName + '/'
-            };
+            else window.location.pathname = '/chat/' + roomName + '/';
         };
-
-
-
-        let handleSubmit = async (roomName,userName) => {
-    
-            let room = roomName
-    
-            let response = await fetch(`/get_token/?channel=${roomName}`)
-            let data = await response.json()
-    
-            let uid = data.uid
-            let token = data.token
-            
-            sessionStorage.setItem('UID', uid)
-            sessionStorage.setItem('token', token)
-            sessionStorage.setItem('room', room)
-
-        }
-
-
-
-
-
-
-
 
         function redirectHome() {
             window.location.pathname = '';
