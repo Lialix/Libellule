@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "889e8732c851da86dd8ad212c8d14d626f0bcc39a103dfbb744306d423372161"
+            "sha256": "378d87d842795dd30fd3877ec5eec307eb917cbc9ea99561c5b084e3c3c9d6c5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,13 @@
         ]
     },
     "default": {
+        "agora-token-builder": {
+            "hashes": [
+                "sha256:6a22a35baf748dc80ca054ba7e293ba16c22dc7eae85396ffb41e80f13f9c2f1"
+            ],
+            "index": "pypi",
+            "version": "==1.0.0"
+        },
         "aioredis": {
             "hashes": [
                 "sha256:15f8af30b044c771aee6787e5ec24694c048184c7b9e54c3b60c750a4b93273a",

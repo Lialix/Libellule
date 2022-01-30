@@ -11,6 +11,7 @@ daphne = "*"
 gunicorn = "*"
 whitenoise = "*"
 django-redis = "*"
+agora-token-builder = "*"
 
 [dev-packages]
 
