@@ -9,6 +9,7 @@ channels = "*"
 channels-redis = "*"
 daphne = "*"
 gunicorn = "*"
+whitenoise = "*"
 
 [dev-packages]
 
