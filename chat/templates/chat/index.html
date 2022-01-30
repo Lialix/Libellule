@@ -18,16 +18,16 @@
 
                     <div class="form-field">
                         <label>Salon:</label>
-                        <input id="room_name" placeholder="Entrer un nom de salon..."  style="text-transform:uppercase"/>
+                        <input id="room_name" name="room_name" placeholder="Entrer un nom de salon..."  style="text-transform:uppercase"/>
                     </div>
 
                     <div class="form-field">
                         <label>Nom:</label>
-                        <input id="user_name" placeholder="Entrer un pseudo..."  style="text-transform:uppercase"/>
+                        <input id="user_name" name="user_name" placeholder="Entrer un pseudo..."  style="text-transform:uppercase"/>
                     </div>
 
                     <div class="form-field">
-                        <input id="room-name-submit" type="button" value="Rejoindre" />
+                        <input type="submit" action="" value="Rejoindre" />
                     </div>
                 </div>
             </form>
@@ -35,6 +35,7 @@
     </main>
 
     <script>
+        /*
         document.querySelector('#room_name').focus();
         document.querySelector('#room_name').onkeyup = function(e) {
             if (e.keyCode === 13) {  // enter, return
@@ -57,35 +58,35 @@
                 window.location.pathname = '/chat/' + roomName + '/'
             };
         };
+*/
 
 
+        let handleSubmit = async (e) => {
 
-        let handleSubmit = async (roomName,userName) => {
+            e.preventDefault()
+            let room = e.target.room_name.value.toUpperCase()
+            let name = e.target.user_name.value
     
-            let room = roomName
-    
-            let response = await fetch(`/get_token/?channel=${roomName}`)
+            let response = await fetch(`/get_token/?channel=${room}`)
             let data = await response.json()
     
             let uid = data.uid
             let token = data.token
-            
+    
             sessionStorage.setItem('UID', uid)
             sessionStorage.setItem('token', token)
             sessionStorage.setItem('room', room)
-
+            sessionStorage.setItem('name', name)
+    
+            window.open('/room/', '_self')
         }
-
-
-
-
-
-
 
 
         function redirectHome() {
             window.location.pathname = '';
         }
+
+        form.addEventListener('submit', handleSubmit)
 
     </script>
 

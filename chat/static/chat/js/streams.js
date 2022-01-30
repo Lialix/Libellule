@@ -1,7 +1,8 @@
 const APP_ID = "6118e51eb7bd4630a66bac8cc561d70c"
-const CHANNEL = 'main'
-const TOKEN = '0066118e51eb7bd4630a66bac8cc561d70cIADDkLE/QoW3hLLsQkN0IGk6AUzOqfFUKoBOklTO75LHfGTNKL8AAAAAEADbqsx0SfP3YQEAAQBH8/dh'
-let UID;
+const CHANNEL = sessionStorage.getItem("room")
+const TOKEN = sessionStorage.getItem("token")
+let UID = Number(sessionStorage.getItem("UID"))
+let NAME = sessionStorage.getItem('name')
 
 const client = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' })
 
@@ -12,21 +13,29 @@ let remoteUsers = {}
 
 let joinAndDisplayLocalStream = async() => {
 
+    document.getElementById('room-name').innerText = CHANNEL
+
     client.on('user-published', handleUserJoined)
     client.on('user-left', handleUserLeft)
-    
-    UID = await client.join(APP_ID, CHANNEL, TOKEN, null)
+
+    try{
+        UID = await client.join(APP_ID, CHANNEL, TOKEN, UID)
+    }catch(error){
+        console.error(error)
+        window.open('/','_self')
+    }
 
     localTracks = await AgoraRTC.createMicrophoneAndCameraTracks()
+
+    let member = await createMember()
 
     let player = `<div class="video-container" id="user-container-${UID}">
                 <div class="video-player" id="user-${UID}"></div> 
                 <div class="username-wrapper"><span class="user-name">TEST</span></div> 
             </div>`
+
     document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
-
     localTracks[1].play(`user-${UID}`)
-
     await client.publish([localTracks[0], localTracks[1]])
 }
 
@@ -90,6 +99,37 @@ let toggleMic = async (e) => {
         e.target.style.backgroundColor = "rgb(255,80,80,1)"
     }
 }
+
+let createMember = async () => {
+    let response = await fetch('/create_member/', {
+        method:'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({'name':NAME, 'room_name':CHANNEL, 'UID':UID})
+    })
+    let member = await response.json()
+    return member
+}
+
+let getMember = async (user) => {
+    let response = await fetch(`/get_member/?UID=${user.uid}&room_name=${CHANNEL}`)
+    let member = await response.json()
+    return member
+}
+
+let deleteMember = async () => {
+    let response = await fetch('/delete_member/', {
+        method:'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({'name':NAME, 'room_name':CHANNEL, 'UID':UID})
+    })
+    let member = await response.json()
+}
+
+window.addEventListener("beforeunload",deleteMember);
 
 joinAndDisplayLocalStream()
 

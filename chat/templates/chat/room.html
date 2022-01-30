@@ -1,7 +1,13 @@
+
 {% extends 'chat/main.html' %}
 {% load static %}
 
-    {% block content %}
+{% block content %}
+
+<main>
+    <section id="room-name-wrapper">
+        <p>Room Name: <span id="room-name"></span></p>
+    </section>
 
     <section id="video-streams"></section>
 
@@ -18,80 +24,9 @@
             <img class="control-icon" id="leave-btn" src="{% static 'chat/images/leave.svg' %}" />
         </div>
     </section>
+</main>
 
 
-    <main>
-    <section id="room-name-wrapper">
-        <p>Nom du Salon: <span id="roomName">{{room_name}}</span></P>
-    <section>
-    <br>
-    <textarea readonly="yes" id="chat-log" style="resize:none" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Envoyer">
-    {{ room_name|json_script:"room-name" }}
-
-    <main>
-
-
-
-
-    <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
-
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-        );
-
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
-        };
-
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
-
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
-        
-
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-
-            if (isEmptyOrSpaces(message)){
-            }
-            else {
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            messageInputDom.value = '';
-        }
-    };
-
-    function redirectIndex() {
-        window.location.pathname = '/chat/'
-    }
-
-    function redirectHome() {
-        window.location.pathname = '';
-    }
-
-        function isEmptyOrSpaces(str){
-            return str === null || str.match(/^ *$/) !== null;
-        }
-
-    </script>
-
-    <script type="text/javascript" src="{% static 'chat/assets/AgoraRTC_N-4.8.1.js'%}"></script>
-    <script type="text/javascript" src="{% static 'chat/js/streams.js'%}"></script>
-
+<script type="text/javascript" src="{% static 'chat/assets/AgoraRTC_N-4.8.1.js' %}"></script>
+<script type="text/javascript" src="{% static 'chat/js/streams.js' %}" ></script>
 {% endblock content %}
