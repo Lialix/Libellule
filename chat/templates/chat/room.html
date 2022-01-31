@@ -40,7 +40,6 @@
             const message = messageInputDom.value;
 
             if (isEmptyOrSpaces(message)){
-                error()
             }
             else {
             chatSocket.send(JSON.stringify({
