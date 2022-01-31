@@ -40,6 +40,7 @@
             const message = sessionStorage.getItem("user_name") + " : " + messageInputDom.value;
 
             if (isEmptyOrSpaces(message)){
+                error()
             }
             else {
             chatSocket.send(JSON.stringify({
