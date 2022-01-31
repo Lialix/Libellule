@@ -37,14 +37,14 @@
 
         document.querySelector('#chat-message-submit').onclick = function(e) {
             const messageInputDom = document.querySelector('#chat-message-input');
-            const message = sessionStorage.getItem("user_name") + " : " + messageInputDom.value;
+            const message = messageInputDom.value;
 
             if (isEmptyOrSpaces(message)){
                 error()
             }
             else {
             chatSocket.send(JSON.stringify({
-                'message': message 
+                'message': sessionStorage.getItem("user_name") + " : " + message 
             }));
             messageInputDom.value = '';
         }
